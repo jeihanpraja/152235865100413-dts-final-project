@@ -1,12 +1,17 @@
+import React from "react";
+import { Routes, Route } from "react-router-dom";
 import "./App.css";
-import NavBar from "./components/NavBar";
-import StickyFooter from "./components/StickyFooter";
+
+import HomePage from "./containers/HomePage";
+import LoginPage from "./containers/LoginPage";
 
 function App() {
   return (
     <div className="App">
-      <NavBar />
-      <StickyFooter />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/login" element={<LoginPage />} />
+      </Routes>
     </div>
   );
 }

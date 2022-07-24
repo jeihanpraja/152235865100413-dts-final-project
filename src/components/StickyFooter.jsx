@@ -1,5 +1,6 @@
 import React from "react";
 import { CssBaseline, Box, Typography, Container } from "@mui/material";
+import CopyrightJeihan from "./CopyrightJeihan";
 
 export default function StickyFooter() {
   return (
@@ -17,11 +18,11 @@ export default function StickyFooter() {
       }}
     >
       <CssBaseline />
-      <Container maxWidth="sm">
-        <Typography variant="body1">DTS Final Project React Developer</Typography>
-        <Typography variant="body2" component="span">
-          Copyright © Jeihan Praja Yudanto 2022
+      <Container maxWidth="sm" sx={{ textAlign: "center" }}>
+        <Typography variant="body1" component="div">
+          DTS Final Project React Developer
         </Typography>
+        <CopyrightJeihan />
       </Container>
     </Box>
   );
