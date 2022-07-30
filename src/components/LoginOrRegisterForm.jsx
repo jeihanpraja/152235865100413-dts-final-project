@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Box,
@@ -7,8 +7,6 @@ import {
   CssBaseline,
   Avatar,
   TextField,
-  FormControlLabel,
-  Checkbox,
   Link,
   Grid,
   Button,
@@ -41,11 +39,6 @@ export default function LoginOrRegisterForm({ loginOrRegister }) {
     } else {
       console.log("bukan login atau register");
     }
-
-    // console.log({
-    //   email: data.get("email"),
-    //   password: data.get("password"),
-    // });
   };
 
   useEffect(() => {
@@ -56,7 +49,7 @@ export default function LoginOrRegisterForm({ loginOrRegister }) {
       navigate("/");
     }
     if (error) {
-      console.log(error);
+      return;
     }
   }, [user, loading, error, navigate]);
 
@@ -107,15 +100,8 @@ export default function LoginOrRegisterForm({ loginOrRegister }) {
               type="password"
             />
 
-            {/* Remember me section */}
-            {loginOrRegister === "login" ? (
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
-            ) : (
-              ""
-            )}
+            {/* untuk tampilkan pesan error */}
+            {/* <Typography variant="body1">{error ? error : ""}</Typography> */}
 
             {loginOrRegister === "login" ? (
               <Button type="submit" fullWidth variant="contained" sx={{ mt: 2, mb: 3 }}>
@@ -129,11 +115,11 @@ export default function LoginOrRegisterForm({ loginOrRegister }) {
 
             {loginOrRegister === "login" ? (
               <Grid container sx={{ mb: 3 }}>
-                <Grid item xs>
+                {/* <Grid item xs>
                   <Link href="#" variant="body2">
                     {`Forgot Password?`}
                   </Link>
-                </Grid>
+                </Grid> */}
                 <Grid item>
                   <Link href="/register" variant="body2">
                     {`Don't have an account? Register Now`}

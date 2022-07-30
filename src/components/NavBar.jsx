@@ -1,15 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { auth, logOut } from "../authentication/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 
 import { AppBar, Box, Toolbar, Typography, Button, IconButton } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
+import SearchIcon from "@mui/icons-material/Search";
 import { useNavigate } from "react-router-dom";
+import { SearchBar, SearchIconWrapper, StyledInputBase } from "./SearchBar";
 
-export default function NavBar() {
+export default function NavBar({ searchOrFilter, changeSearchValue }) {
   let navigate = useNavigate();
 
-  //status user ada atau null
+  //ambil state user, ada atau null
   const [user] = useAuthState(auth);
 
   const handleClickLogin = (event) => {
@@ -22,17 +24,57 @@ export default function NavBar() {
     logOut();
   };
 
+  const handleSearchChange = (event) => {
+    event.preventDefault();
+    changeSearchValue(event.target.value);
+    console.log(event.target.value);
+  };
+
   return (
     <Box sx={{ flexGrow: 1, textAlign: "center" }}>
-      <AppBar position="static">
+      <AppBar position="fixed" component="nav">
         <Toolbar>
           <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1, textAlign: "left" }}>
+          <Box sx={{ display: "flex", flexDirection: "row", gap: 2 }}>
+            <Button color="inherit" onClick={() => navigate("/")}>
+              Home
+            </Button>
+            <Button color="inherit" onClick={() => navigate("/search")}>
+              Search
+            </Button>
+            <Button color="inherit" onClick={() => navigate("/filter")}>
+              Filter
+            </Button>
+          </Box>
+
+          <Typography
+            variant="body1"
+            component="div"
+            sx={{ flexGrow: 1, textAlign: "center", ml: 4 }}
+          >
             DTS Final Project
           </Typography>
-          <Typography variant="body1" sx={{ mr: 4 }}>
+
+          {/* tampilkan kotak search apabila di halaman /search */}
+          {searchOrFilter === "search" ? (
+            <SearchBar>
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase
+                placeholder="Search"
+                inputProps={{ "aria-label": "search" }}
+                onChange={(event) => handleSearchChange(event)}
+                autoFocus
+              />
+            </SearchBar>
+          ) : (
+            ""
+          )}
+
+          <Typography variant="body2" sx={{ mr: 4 }}>
             {user ? user.email : "Anda Belum Login"}
           </Typography>
           {user ? (
