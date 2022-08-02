@@ -1,33 +1,46 @@
-import React, { useState, useEffect } from "react";
-import { Box, Typography } from "@mui/material";
-import { mealDbInstance } from "../apis/mealDB";
+import React from "react";
+import { TextField, Autocomplete } from "@mui/material";
 
-export default function FilterBar() {
-  // buat state untuk daftar makanan
-  const [list, setList] = useState([]);
-
-  //buat fungsi untuk fetch data dari mealDB API
-  useEffect(() => {
-    const fetchList = async () => {
-      try {
-        const response = await mealDbInstance.get("/list.php", {
-          params: {
-            c: "list",
-          },
-        });
-        setList(response.data.meals);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchList();
-  }, []);
+export default function FilterBar({ filterChange }) {
+  //fungsi ketika filter dipilih dan value diganti
+  const FilterOnChangeHandler = (event, value) => {
+    event.preventDefault();
+    if (value) {
+      filterChange(value);
+    } else {
+      return;
+    }
+  };
 
   return (
-    <Box>
-      {list.map((el) => {
-        return <Typography>{el.strCategory}</Typography>;
-      })}
-    </Box>
+    <Autocomplete
+      disablePortal
+      id="combo-box"
+      options={Category}
+      sx={{
+        width: 250,
+        mt: 2,
+        mb: 2,
+      }}
+      renderInput={(params) => <TextField {...params} label="Category" />}
+      onInputChange={(event, value) => FilterOnChangeHandler(event, value)}
+    />
   );
 }
+
+const Category = [
+  { label: "Beef" },
+  { label: "Breakfast" },
+  { label: "Chicken" },
+  { label: "Dessert" },
+  { label: "Goat" },
+  { label: "Lamb" },
+  { label: "Miscellaneous" },
+  { label: "Pasta" },
+  { label: "Pork" },
+  { label: "Seafood" },
+  { label: "Side" },
+  { label: "Starter" },
+  { label: "Vegan" },
+  { label: "Vegetarian" },
+];

@@ -10,6 +10,7 @@ import { mealDbInstance } from "../apis/mealDB";
 
 export default function DetailPage() {
   const [food, setFood] = useState([]);
+  let params = useParams();
 
   useEffect(() => {
     const fetchFood = async () => {
@@ -24,9 +25,8 @@ export default function DetailPage() {
       }
     };
     fetchFood();
-  }, []);
+  }, [params]);
 
-  let params = useParams();
   return (
     <ProtectedComponent>
       <Box>

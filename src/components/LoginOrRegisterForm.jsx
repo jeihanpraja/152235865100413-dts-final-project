@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Box,
@@ -23,9 +23,6 @@ export default function LoginOrRegisterForm({ loginOrRegister }) {
   const theme = createTheme();
   let navigate = useNavigate();
 
-  //state dari user yg sedang login
-  const [user, loading, error] = useAuthState(auth);
-
   const handleSubmit = (event, loginOrRegister) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -41,15 +38,19 @@ export default function LoginOrRegisterForm({ loginOrRegister }) {
     }
   };
 
+  //state dari user yg sedang login
+  const [user, loading, error] = useAuthState(auth);
+
   useEffect(() => {
     if (loading) {
-      return;
+      console.log("loading");
+      // return ;
     }
     if (user) {
       navigate("/");
     }
     if (error) {
-      return;
+      console.log(error);
     }
   }, [user, loading, error, navigate]);
 
@@ -101,7 +102,7 @@ export default function LoginOrRegisterForm({ loginOrRegister }) {
             />
 
             {/* untuk tampilkan pesan error */}
-            {/* <Typography variant="body1">{error ? error : ""}</Typography> */}
+            <Typography variant="body1">{error ? { error } : ""}</Typography>
 
             {loginOrRegister === "login" ? (
               <Button type="submit" fullWidth variant="contained" sx={{ mt: 2, mb: 3 }}>

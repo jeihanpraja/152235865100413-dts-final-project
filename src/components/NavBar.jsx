@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { auth, logOut } from "../authentication/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 
@@ -7,6 +7,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import { useNavigate } from "react-router-dom";
 import { SearchBar, SearchIconWrapper, StyledInputBase } from "./SearchBar";
+import FilterBar from "./FilterBar";
 
 export default function NavBar({ searchOrFilter, changeSearchValue }) {
   let navigate = useNavigate();

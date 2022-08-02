@@ -5,7 +5,7 @@ import CopyrightJeihan from "./CopyrightJeihan";
 export default function StickyFooter() {
   return (
     <Box
-      // position="sticky"
+      position="sticky"
       component="footer"
       sx={{
         bottom: 0,
