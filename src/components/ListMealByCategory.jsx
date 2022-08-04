@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { mealDbInstance } from "../apis/mealDB";
 
+//import carousel component and styles
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
+
 import { Typography, Box } from "@mui/material";
 import CardMeal from "./CardMeal";
 
@@ -43,36 +47,102 @@ export default function ListMealByCategory() {
   }, []);
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
-      {/* list Seafood */}
+    <Box sx={{ display: "flex", flexDirection: "column", gap: 1, mb: 2 }}>
+      {/* list Seafood Carousel*/}
       <Typography variant="h5" sx={{ ml: 2 }}>
         Seafood Meals
       </Typography>
-      <Box sx={{ display: "flex" }}>
+      <Carousel
+        additionalTransfrom={0}
+        arrows
+        autoPlay
+        autoPlaySpeed={3000}
+        containerClass="container-with-dots"
+        infinite
+        pauseOnHover
+        renderDotsOutside={false}
+        responsive={{
+          desktop: {
+            breakpoint: {
+              max: 3000,
+              min: 1024,
+            },
+            items: 6,
+            partialVisibilityGutter: 40,
+          },
+        }}
+        shouldResetAutoplay
+        showDots
+        slidesToSlide={1}
+      >
         {seafoods?.map((food) => {
           return <CardMeal key={food.idMeal} food={food} />;
         })}
-      </Box>
+      </Carousel>
 
-      {/* list Beef */}
+      {/* list Beef Carousel*/}
       <Typography variant="h5" sx={{ ml: 2 }}>
         Beef Meals
       </Typography>
-      <Box sx={{ display: "flex" }}>
+      <Carousel
+        additionalTransfrom={0}
+        arrows
+        autoPlay
+        autoPlaySpeed={3000}
+        containerClass="container-with-dots"
+        infinite
+        pauseOnHover
+        renderDotsOutside={false}
+        responsive={{
+          desktop: {
+            breakpoint: {
+              max: 3000,
+              min: 1024,
+            },
+            items: 6,
+            partialVisibilityGutter: 40,
+          },
+        }}
+        shouldResetAutoplay
+        showDots
+        slidesToSlide={1}
+      >
         {beefs?.map((food) => {
           return <CardMeal key={food.idMeal} food={food} />;
         })}
-      </Box>
+      </Carousel>
 
-      {/* list Chicken */}
+      {/* list Chicken Carousel*/}
       <Typography variant="h5" sx={{ ml: 2 }}>
         Chicken Meals
       </Typography>
-      <Box sx={{ display: "flex" }}>
+      <Carousel
+        additionalTransfrom={0}
+        arrows
+        autoPlay
+        autoPlaySpeed={3000}
+        containerClass="container-with-dots"
+        infinite
+        pauseOnHover
+        renderDotsOutside={false}
+        responsive={{
+          desktop: {
+            breakpoint: {
+              max: 3000,
+              min: 1024,
+            },
+            items: 6,
+            partialVisibilityGutter: 40,
+          },
+        }}
+        shouldResetAutoplay
+        showDots
+        slidesToSlide={1}
+      >
         {chickens?.map((food) => {
           return <CardMeal key={food.idMeal} food={food} />;
         })}
-      </Box>
+      </Carousel>
     </Box>
   );
 }

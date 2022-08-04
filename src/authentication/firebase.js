@@ -16,10 +16,10 @@ const firebaseConfig = {
 };
 
 //initialize Firebase
-const app = initializeApp(firebaseConfig);
+const firebaseApp = initializeApp(firebaseConfig);
 
 // Initialize Firebase Authentication and get a reference to the service
-const auth = getAuth(app);
+const auth = getAuth(firebaseApp);
 
 const registerEmailPassword = async (email, password) => {
   try {
@@ -36,13 +36,25 @@ const registerEmailPassword = async (email, password) => {
 
 const loginEmailPassword = async (email, password) => {
   try {
-    const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    const user = userCredential.user;
-    console.log(user.email);
-  } catch (err) {
-    return err.message;
+    await signInWithEmailAndPassword(auth, email, password);
+  } catch (error) {
+    console.log(error.message);
+    return error.message;
   }
 };
+
+// const loginEmailPassword = async (email, password) => {
+//   try {
+//     const userCredential = await signInWithEmailAndPassword(auth, email, password);
+//     const user = userCredential.user;
+//     console.log(user.email);
+//   } catch (error) {
+//     const errorCode = error.code;
+//     const errorMessage = error.message;
+//     console.log(errorCode);
+//     console.log(errorMessage);
+//   }
+// };
 
 const logOut = async () => {
   try {

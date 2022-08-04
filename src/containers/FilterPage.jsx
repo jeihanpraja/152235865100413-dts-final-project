@@ -7,6 +7,9 @@ import { mealDbInstance } from "../apis/mealDB";
 import CardMeal from "../components/CardMeal";
 
 export default function FilterPage() {
+  //state AreaOrCategory
+  const [areaOrCategory, setAreaOrCategory] = useState("");
+
   //state filter bar selection
   const [filterSelected, setFilterSelected] = useState("");
 
@@ -16,18 +19,33 @@ export default function FilterPage() {
   useEffect(() => {
     const fetchMeals = async () => {
       try {
-        const responseMeals = await mealDbInstance.get("/filter.php", {
-          params: {
-            c: filterSelected,
-          },
-        });
-        setMealsByFilter(responseMeals.data.meals);
+        if (areaOrCategory === "Area") {
+          const responseMealsByArea = await mealDbInstance.get("/filter.php", {
+            params: {
+              a: filterSelected,
+            },
+          });
+          setMealsByFilter(responseMealsByArea.data.meals);
+        } else {
+          const responseMealsByCategory = await mealDbInstance.get("/filter.php", {
+            params: {
+              c: filterSelected,
+            },
+          });
+          setMealsByFilter(responseMealsByCategory.data.meals);
+        }
       } catch (error) {
         console.log(error);
       }
     };
     fetchMeals();
-  }, [filterSelected]);
+  }, [filterSelected, areaOrCategory]);
+
+  const AreaOrCategoryChange = (value) => {
+    setAreaOrCategory(value);
+    console.log(areaOrCategory);
+    return areaOrCategory;
+  };
 
   const filterChange = (filter) => {
     setFilterSelected(filter);
@@ -46,7 +64,11 @@ export default function FilterPage() {
           // border: "1px dashed black",
         }}
       >
-        <FilterBar filterChange={filterChange} />
+        <FilterBar
+          filterChange={filterChange}
+          areaOrCategoryChange={AreaOrCategoryChange}
+          areaOrCategory={areaOrCategory}
+        />
         <Box sx={{ display: "flex", flexFlow: "row wrap" }}>
           {mealsByFilter?.map((food) => {
             return <CardMeal key={food.idMeal} food={food} />;

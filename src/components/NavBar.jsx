@@ -7,7 +7,6 @@ import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import { useNavigate } from "react-router-dom";
 import { SearchBar, SearchIconWrapper, StyledInputBase } from "./SearchBar";
-import FilterBar from "./FilterBar";
 
 export default function NavBar({ searchOrFilter, changeSearchValue }) {
   let navigate = useNavigate();

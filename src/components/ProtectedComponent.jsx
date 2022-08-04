@@ -1,14 +1,8 @@
-import React, { useEffect } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { auth } from "../authentication/firebase";
-
-export default function ProtectedComponent({ children }) {
+export default function ProtectedComponent({ user, loading, children }) {
   let navigate = useNavigate();
-
-  //ambil state user dari firebase
-  const [user, loading] = useAuthState(auth);
 
   //cek status user. kalau null, pindah ke halaman login
   useEffect(() => {

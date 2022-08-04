@@ -10,6 +10,8 @@ import {
   Link,
   Grid,
   Button,
+  Alert,
+  Stack,
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import IconButton from "@mui/material/IconButton";
@@ -22,6 +24,9 @@ import { useAuthState } from "react-firebase-hooks/auth";
 export default function LoginOrRegisterForm({ loginOrRegister }) {
   const theme = createTheme();
   let navigate = useNavigate();
+
+  //state dari user yg sedang login
+  const [user, loading, error] = useAuthState(auth);
 
   const handleSubmit = (event, loginOrRegister) => {
     event.preventDefault();
@@ -38,19 +43,16 @@ export default function LoginOrRegisterForm({ loginOrRegister }) {
     }
   };
 
-  //state dari user yg sedang login
-  const [user, loading, error] = useAuthState(auth);
-
   useEffect(() => {
     if (loading) {
-      console.log("loading");
-      // return ;
-    }
-    if (user) {
-      navigate("/");
+      console.log("loading...");
     }
     if (error) {
       console.log(error);
+    }
+    if (user) {
+      console.log(user.email);
+      navigate("/");
     }
   }, [user, loading, error, navigate]);
 
@@ -102,7 +104,13 @@ export default function LoginOrRegisterForm({ loginOrRegister }) {
             />
 
             {/* untuk tampilkan pesan error */}
-            <Typography variant="body1">{error ? { error } : ""}</Typography>
+            {error ? (
+              <Stack sx={{ width: "100%" }} spacing={2}>
+                <Alert severity="error">Wrong Username or Password</Alert>
+              </Stack>
+            ) : (
+              ""
+            )}
 
             {loginOrRegister === "login" ? (
               <Button type="submit" fullWidth variant="contained" sx={{ mt: 2, mb: 3 }}>
